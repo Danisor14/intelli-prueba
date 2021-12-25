@@ -11,7 +11,7 @@ import {
 const useStyles = makeStyles(() => ({
   container: {
     display: "flex",
-    height: "100vh",
+    height: "100vh", 
     justifyContent: "center",
     alignItems: "center",
     background: "#181721",
@@ -36,8 +36,9 @@ const useStyles = makeStyles(() => ({
   textField: {
     marginBottom: 15,
   },
-  textManage: {
+  textWelcome: {
     marginBottom: 20,
+    textAlign: 'center'
   },
   btnIn: {
     background: "#67dabb",
@@ -94,19 +95,19 @@ const Login = () => {
           <Typography variant="h4" className={classes.textSingIn}>
             Hello, Friend!
           </Typography>
-          <Typography variant="body2" className={classes.textManage}>
-            Make you comfortable with Intelli-test
+          <Typography variant="body2" className={classes.textWelcome}>
+            Make you comfortable with Intelli-ReactTest
           </Typography>
 
           {/* <Link to="/new-account"> */}
-            <Button
-              variant="outlined"
-              classes={{
-                outlined: classes.btnUp,
-              }}
-            >
-              Sing Up
-            </Button>
+          <Button
+            variant="outlined"
+            classes={{
+              outlined: classes.btnUp,
+            }}
+          >
+            Sing Up
+          </Button>
           {/* </Link> */}
         </Grid>
 
