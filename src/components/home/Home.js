@@ -16,7 +16,8 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     display: "flex",
-    height: "100vh",
+    height: "auto",
+    minHeight: "100vh",
     background: "#181721",
   },
   main: {

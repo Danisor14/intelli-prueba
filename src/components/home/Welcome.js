@@ -1,7 +1,7 @@
 import React from 'react';
 import {makeStyles, Typography} from '@material-ui/core'
 import { Link } from 'react-router-dom';
-import welcomeImg from './welcome.png'
+import welcomeImg from '../../assets/welcome.png'
 
 
 const useStyles = makeStyles(() => ({
