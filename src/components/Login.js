@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import {
   Button,
   Grid,
@@ -7,6 +6,9 @@ import {
   Typography,
   TextField,
 } from "@material-ui/core";
+
+import { useDispatch } from "react-redux";
+import { login } from "../actions/deviceAction";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -68,6 +70,9 @@ const Login = () => {
     password: "",
   });
 
+  const dispatch = useDispatch();
+
+
   const handleChange = (e) => {
     setUser({
       ...user,
@@ -75,8 +80,8 @@ const Login = () => {
     });
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const handleClick = () => {
+    dispatch(login(user));
   };
 
   return (
@@ -99,7 +104,6 @@ const Login = () => {
             Make you comfortable with Intelli-ReactTest
           </Typography>
 
-          {/* <Link to="/new-account"> */}
           <Button
             variant="outlined"
             classes={{
@@ -108,14 +112,12 @@ const Login = () => {
           >
             Sing Up
           </Button>
-          {/* </Link> */}
         </Grid>
 
         <Grid
           container
           item
-          xs={12}
-          sm={6}
+          xs={12} sm={6}
           direction="column"
           alignItems="center"
           justifyContent="center"
@@ -153,7 +155,7 @@ const Login = () => {
             classes={{
               root: classes.btnIn,
             }}
-            onSubmit={() => onSubmit()}
+            onClick={handleClick}
           >
             Sing in
           </Button>

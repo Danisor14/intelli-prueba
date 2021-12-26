@@ -10,6 +10,8 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
 import { drawerWidth } from "./DrawerComponent";
+import {useDispatch} from "react-redux";
+import { logOut } from "../../actions/deviceAction";
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
@@ -43,6 +45,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = ({ handleOpen }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(logOut());
+  }
 
   return (
     <AppBar className={classes.appBar}>
@@ -65,6 +72,7 @@ const Header = ({ handleOpen }) => {
           color="default"
           size="small"
           startIcon={<ExitToAppOutlinedIcon />}
+          onClick={handleClick}
           classes={{
             root: classes.btnLogOut,
           }}
