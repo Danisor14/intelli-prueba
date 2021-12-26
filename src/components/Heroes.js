@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Divider, makeStyles, Typography, Card, CardActionArea, CardMedia, CardContent } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { getHeroes } from "../actions/heroAction";
+import marvel from "../assets/marvel.png"
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -12,9 +13,14 @@ const useStyles = makeStyles(() => ({
     borderRadius: 10,
     background: "#181721",
   },
+  titleContainer: {
+      display: "flex",
+      alignItems: "flex-end",
+      marginBottom: 20
+  },
   title: {
-    marginBottom: 15,
-    fontWeight: 600,
+    fontFamily: 'Marvel, sans-serif',
+    fontWeight: 800,
     color: "#e9e9e9",
   },
   divider: {
@@ -32,7 +38,11 @@ const useStyles = makeStyles(() => ({
       height: 200,
       width: 200,
       objectFit: 'fill',
-
+  },
+  marvel: {
+      height: 40,
+      width: 90,
+      marginRight: 8
   }
 }));
 
@@ -48,9 +58,12 @@ const Heroes = () => {
 
     return (
       <div className={classes.container}>
-        <Typography className={classes.title} variant="h5">
-          Marvel Heroes
-        </Typography>
+        <div className={classes.titleContainer}>
+          <img src={marvel} className={classes.marvel} />
+          <Typography className={classes.title} variant="h5">
+            Heroes
+          </Typography>
+        </div>
         <Divider className={classes.divider} />
         <div className={classes.resultContainer}>
           {heroes.map((hero) => (
@@ -64,11 +77,14 @@ const Heroes = () => {
               >
                 <CardMedia
                   component="img"
-                  className={classes.img}  
+                  className={classes.img}
                   src={`${hero.thumbnail.path}.${hero.thumbnail.extension}`}
                 />
                 <CardContent>
-                  <Typography variant="subtitle2" align="center" /* className={classes.heroName} */>
+                  <Typography
+                    variant="subtitle2"
+                    align="center" /* className={classes.heroName} */
+                  >
                     {hero.name}
                   </Typography>
                 </CardContent>

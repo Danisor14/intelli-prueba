@@ -189,8 +189,7 @@ const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
     maxWidth: 300,
-    marginBottom: 10,
-    marginRight: 10, 
+    margin: 10
   },
   details: {
     display: "flex",
@@ -203,6 +202,9 @@ const useStyles = makeStyles(() => ({
   cover: {
     width: 100,
   },
+  textModelo: {
+      textTransform: "lowercase"
+  }
 }));
 
 const Devices = () => {
@@ -247,7 +249,10 @@ const Devices = () => {
                     {result.device_name}
                   </Typography>
                   <Typography variant="parrafo2" color="textSecondary">
-                    Modelo: {result.device_model}
+                    Modelo:{" "}
+                    <span className={classes.textModelo}>
+                      {result.device_model}
+                    </span>
                   </Typography>
                   <Typography variant="parrafo2" color="textSecondary">
                     Serial: {result.settings_device.serial}
