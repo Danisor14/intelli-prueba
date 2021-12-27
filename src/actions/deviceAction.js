@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { LOGIN, LOGOUT } from "../Types";
+import { LOGIN, LOGOUT, LOGINERROR, CLEANERROR } from "../Types";
 
 export function login(user) {
     return async (dispatch) => {
@@ -22,7 +22,7 @@ export function login(user) {
             dispatch(loginDispatch(response.data));
 
         } catch (error) {
-            console.log(error);
+            dispatch(loginError(error.response.data));
         } 
     }
 }
@@ -32,6 +32,21 @@ const loginDispatch = (data) => ({
     payload: data
 })
 
+function loginError(errorData) {
+    return (dispatch) => {
+
+        setTimeout(() => {
+          dispatch({
+            type: CLEANERROR,
+          });
+        }, 4500);
+
+        dispatch({
+            type: LOGINERROR,
+            payload: errorData
+        })
+    }
+}
 
 export function logOut() {
     return (dispatch) => {

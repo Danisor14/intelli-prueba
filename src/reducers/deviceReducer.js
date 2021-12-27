@@ -1,4 +1,4 @@
-import {LOGIN, LOGOUT} from "../Types"; 
+import {LOGIN, LOGINERROR, LOGOUT, CLEANERROR} from "../Types"; 
 
 
 const initialState2 = {
@@ -23,6 +23,16 @@ export default function deviceReducer(state = initialState, action) {
           ...state,
           logged: false,
           userData: {}
+      }
+    case LOGINERROR:
+      return {
+        ...state,
+        error: action.payload
+      }
+    case CLEANERROR: 
+      return {
+        ...state,
+        error: null
       }
     default:
       return state;

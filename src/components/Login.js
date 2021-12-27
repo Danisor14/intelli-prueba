@@ -5,18 +5,34 @@ import {
   makeStyles,
   Typography,
   TextField,
+  Slide,
 } from "@material-ui/core";
+import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../actions/deviceAction";
 
 const useStyles = makeStyles(() => ({
   container: {
     display: "flex",
+    flexDirection: "column",
     height: "100vh", 
     justifyContent: "center",
     alignItems: "center",
     background: "#181721",
+  },
+  errorMsg: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 20,
+    padding: 10,
+    background: "#67dabb",
+    color: "#181721",
+    borderRadius: 5,
+  },
+  icon: {
+    marginRight: 10
   },
   loginContainer: {
     maxWidth: 700,
@@ -40,7 +56,7 @@ const useStyles = makeStyles(() => ({
   },
   textWelcome: {
     marginBottom: 20,
-    textAlign: 'center'
+    textAlign: "center",
   },
   btnIn: {
     background: "#67dabb",
@@ -71,7 +87,7 @@ const Login = () => {
   });
 
   const dispatch = useDispatch();
-
+  const errorMsg = useSelector(state => state.device.error);
 
   const handleChange = (e) => {
     setUser({
@@ -117,7 +133,8 @@ const Login = () => {
         <Grid
           container
           item
-          xs={12} sm={6}
+          xs={12}
+          sm={6}
           direction="column"
           alignItems="center"
           justifyContent="center"
@@ -161,6 +178,14 @@ const Login = () => {
           </Button>
         </Grid>
       </Grid>
+      {errorMsg ? (
+        <Slide direction="up" in={errorMsg ? true : false} mountOnEnter unmountOnExit>
+          <div className={classes.errorMsg}>
+            <ErrorOutlineIcon className={classes.icon} />
+            <Typography variant="body2">{`Error: ${errorMsg.error}, ${errorMsg.msg}`}</Typography>
+          </div>
+        </Slide>
+      ) : null}
     </div>
   );
 };

@@ -10,7 +10,7 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
 import { drawerWidth } from "./DrawerComponent";
-import {useDispatch} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../actions/deviceAction";
 
 const useStyles = makeStyles((theme) => ({
@@ -35,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
   helloContainer: {
     flexGrow: 1,
   },
+  helloText: {
+    textTransform: "capitalize"
+  },
   welcomeText: {
     fontSize: 10,
   },
@@ -46,6 +49,8 @@ const useStyles = makeStyles((theme) => ({
 const Header = ({ handleOpen }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  const name = useSelector((state) => state.device.userData.user.first_name);
 
   const handleClick = () => {
     dispatch(logOut());
@@ -63,8 +68,12 @@ const Header = ({ handleOpen }) => {
           <MenuIcon />
         </IconButton>
         <div className={classes.helloContainer}>
-          <Typography variant="h5">Hello, User</Typography>
-          <Typography className={classes.welcomeText}>Make confortable!</Typography>
+          <Typography className={classes.helloText} variant="h5">
+            Hello, {name.toLowerCase()}
+          </Typography>
+          <Typography className={classes.welcomeText}>
+            Make confortable!
+          </Typography>
         </div>
 
         <Button
