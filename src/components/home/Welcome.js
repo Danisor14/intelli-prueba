@@ -26,16 +26,16 @@ const Welcome = () => {
       <div className={classes.container}>
         <img src={welcomeImg} />
         <Typography variant="body2">
-          thank you for using our services
+          thank you for using our services,
         </Typography>
         <Typography variant="body2">have a look at</Typography>
         <Typography variant="body2">
           <Link className={classes.link} to="devices">
-            devices
+            Devices
           </Link>{" "}
           or{" "}
           <Link className={classes.link} to="heroes">
-            heroes
+            Heroes
           </Link>
         </Typography>
       </div>

@@ -5,7 +5,7 @@ import DrawerComponent from './DrawerComponent';
 import { drawerWidth } from "./DrawerComponent";
 import { Routes, Route } from 'react-router';
 import Devices from "../Devices"
-import Heroes from "../Heroes";
+import Heroes from '../hero/Heroes';
 import Welcome from './Welcome';
 
 

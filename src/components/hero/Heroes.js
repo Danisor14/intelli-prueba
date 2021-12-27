@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Divider, makeStyles, Typography, Card, CardActionArea, CardMedia, CardContent } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { getHeroes } from "../actions/heroAction";
-import marvel from "../assets/marvel.png"
+import { getHeroes, getHeroInfo } from "../../actions/heroAction";
+import marvel from "../../assets/marvel.png"
+import HeroModal from "./HeroModal";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -51,10 +52,19 @@ const Heroes = () => {
     const dispatch = useDispatch();
     const heroes = useSelector(state => state.hero.heroes);
 
+    const [open, setOpen] = useState(false);
+
     useEffect(() => {
-        console.log('kivi');
         dispatch(getHeroes());
     },[]);
+
+    const handleOpen = () => {
+      setOpen(true);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
 
     return (
       <div className={classes.container}>
@@ -67,13 +77,12 @@ const Heroes = () => {
         <Divider className={classes.divider} />
         <div className={classes.resultContainer}>
           {heroes.map((hero) => (
-            <Card className={classes.card}>
+            <Card className={classes.card} key={hero.id}>
               <CardActionArea
-              /* onClick={() => {
-                  setReceta({});
-                  setIdBebida(receta.idDrink);
+                onClick={() => {
                   handleOpen();
-                }} */
+                  dispatch(getHeroInfo(hero));
+                }}
               >
                 <CardMedia
                   component="img"
@@ -91,6 +100,7 @@ const Heroes = () => {
               </CardActionArea>
             </Card>
           ))}
+          <HeroModal open={open} handleClose={handleClose} />
         </div>
       </div>
     );

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GETHEROES } from "../Types";
+import { GETHEROES, GETHEROINFO } from "../Types";
 
 export function getHeroes() {
   return async (dispatch) => {
@@ -17,4 +17,13 @@ export function getHeroes() {
       console.log(error);
     }
   };
+}
+
+export function getHeroInfo(info) {
+  return (dispatch) => {
+      dispatch({
+        type: GETHEROINFO,
+        payload: info,
+      });
+  }
 }
