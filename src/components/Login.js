@@ -10,7 +10,7 @@ import {
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../actions/deviceAction";
+import { login } from "../actions/loginAction";
 
 const useStyles = makeStyles(() => ({
   container: {

@@ -1,10 +1,11 @@
-import {LOGIN, LOGINERROR, LOGOUT, CLEANERROR} from "../Types"; 
+import {LOGIN, LOGINERROR, LOGOUT, CLEANERROR, GETDEVICES, LOADMORE} from "../Types"; 
 
 
 const initialState2 = {
-    logged: false,
-    userData: {}
-}
+  logged: false,
+  userData: {},
+  devices: []
+};
 
 const initialState = localStorage.getItem("user") ? JSON.parse(localStorage.getItem('user')) : initialState2
 
@@ -33,6 +34,16 @@ export default function deviceReducer(state = initialState, action) {
       return {
         ...state,
         error: null
+      }
+    case GETDEVICES:
+      return {
+        ...state,
+        devices: action.payload
+      }
+    case LOADMORE: 
+      return {
+        ...state,
+        devices: [...state.devices , ...action.payload]
       }
     default:
       return state;

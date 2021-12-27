@@ -1,59 +1,55 @@
-import axios from 'axios'
-import { LOGIN, LOGOUT, LOGINERROR, CLEANERROR } from "../Types";
+import clientAxios from "../config/clientAxios";
+import { GETDEVICES, LOADMORE } from "../Types";
 
-export function login(user) {
+let offset = 0;
+
+export function getDevices(searchData) {
+
+    offset = 0;
+
     return async (dispatch) => {
-        const url = "https://api.dev.myintelli.net/v1/login";
+        const url = `devices?limit=5&offset=${offset}&search=${searchData}`;
+        const token = JSON.parse(localStorage.getItem('user')).userData.token;
+
+        const deviceAxios = clientAxios(token);
 
         try { 
-            let response = await axios.post(url, 
-                {
-                    "email": user.email,
-                    "password": user.password 
-                }
-            )
+            let response = await deviceAxios.get(url);
             
-            const initialState = {
-                logged: true,
-                userData: response.data
-            }
-
-            localStorage.setItem('user', JSON.stringify(initialState));
-            dispatch(loginDispatch(response.data));
+            dispatch(getDeviceDispatch(response.data.data.results));
 
         } catch (error) {
-            dispatch(loginError(error.response.data));
+            console.log(error);
         } 
     }
 }
-
-const loginDispatch = (data) => ({
-    type: LOGIN,
+ 
+const getDeviceDispatch = (data) => ({
+    type: GETDEVICES,
     payload: data
-})
+});
 
-function loginError(errorData) {
-    return (dispatch) => {
 
-        setTimeout(() => {
-          dispatch({
-            type: CLEANERROR,
-          });
-        }, 4500);
+export function loadMore(searchData) {
+  offset += 5;
 
-        dispatch({
-            type: LOGINERROR,
-            payload: errorData
-        })
+  return async (dispatch) => {
+    const url = `devices?limit=5&offset=${offset}&search=${searchData}`;
+    const token = JSON.parse(localStorage.getItem("user")).userData.token;
+
+    const deviceAxios = clientAxios(token);
+
+    try {
+      let response = await deviceAxios.get(url);
+
+      dispatch(loadMoreDispatch(response.data.data.results));
+    } catch (error) {
+      console.log(error);
     }
+  };
 }
 
-export function logOut() {
-    return (dispatch) => {
-        localStorage.removeItem('user');
-
-        dispatch({
-            type: LOGOUT,
-        })
-    }
-}
+const loadMoreDispatch = (data) => ({
+  type: LOADMORE,
+  payload: data,
+});

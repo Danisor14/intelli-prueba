@@ -1,150 +1,11 @@
 import React, {useState} from 'react';
-import {makeStyles, Grid, Paper, InputBase, IconButton, Divider, Typography, Card, CardMedia, CardContent} from '@material-ui/core'
+import {makeStyles, Paper, InputBase, IconButton, Divider, Typography, Card, CardMedia, CardContent, Button} from '@material-ui/core'
 import SearchIcon from "@material-ui/icons/Search";
 import defaultDevice from "../assets/defaultDevice.png";
+import {useDispatch, useSelector} from "react-redux";
+import { getDevices, loadMore } from '../actions/deviceAction';
+import searchImage from "../assets/search.png";
 
-const results = [
-  {
-    id_device: 80,
-    device_name: "26610288-CJE4VNCKK1-PHONE",
-    id_device_model: 44,
-    settings_device: {
-      serial: "89ea94854d657932",
-      id_structure: 1,
-    },
-    status: 1,
-    device_model: "MYINTELLI PHONE",
-    photo: null,
-    hasGroups: false,
-    entity_group: null,
-  },
-  {
-    id_device: 79,
-    device_name: "26610288-YBN4L2YUNK-PHONE",
-    id_device_model: 44,
-    settings_device: {
-      serial: "89ea94854d657932",
-      id_structure: 1,
-    },
-    status: 1,
-    device_model: "MYINTELLI PHONE",
-    photo: null,
-    hasGroups: false,
-    entity_group: null,
-  },
-  {
-    id_device: 78,
-    device_name: "766766767-T1QB0ESR1M-PHONE",
-    id_device_model: 44,
-    settings_device: {
-      serial: "727782",
-      id_structure: 1,
-    },
-    status: 1,
-    device_model: "MYINTELLI PHONE",
-    photo: null,
-    hasGroups: false,
-    entity_group: null,
-  },
-  {
-    id_device: 73,
-    device_name: "IPHONE",
-    id_device_model: 44,
-    settings_device: {
-      serial: "44219V4NL",
-      id_structure: 1,
-    },
-    status: 1,
-    device_model: "MYINTELLI PHONE",
-    photo: null,
-    hasGroups: false,
-    entity_group: null,
-  },
-  {
-    id_device: 74,
-    device_name: "IPHONE 7S",
-    id_device_model: 44,
-    settings_device: {
-      serial: "44MMV3DU4",
-      id_structure: 1,
-    },
-    status: 1,
-    device_model: "MYINTELLI PHONE",
-    photo: null,
-    hasGroups: false,
-    entity_group: null,
-  },
-  {
-    id_device: 80,
-    device_name: "26610288-CJE4VNCKK1-PHONE",
-    id_device_model: 44,
-    settings_device: {
-      serial: "89ea94854d657932",
-      id_structure: 1,
-    },
-    status: 1,
-    device_model: "MYINTELLI PHONE",
-    photo: null,
-    hasGroups: false,
-    entity_group: null,
-  },
-  {
-    id_device: 79,
-    device_name: "26610288-YBN4L2YUNK-PHONE",
-    id_device_model: 44,
-    settings_device: {
-      serial: "89ea94854d657932",
-      id_structure: 1,
-    },
-    status: 1,
-    device_model: "MYINTELLI PHONE",
-    photo: null,
-    hasGroups: false,
-    entity_group: null,
-  },
-  {
-    id_device: 78,
-    device_name: "766766767-T1QB0ESR1M-PHONE",
-    id_device_model: 44,
-    settings_device: {
-      serial: "727782",
-      id_structure: 1,
-    },
-    status: 1,
-    device_model: "MYINTELLI PHONE",
-    photo: null,
-    hasGroups: false,
-    entity_group: null,
-  },
-  {
-    id_device: 73,
-    device_name: "IPHONE",
-    id_device_model: 44,
-    settings_device: {
-      serial: "44219V4NL",
-      id_structure: 1,
-    },
-    status: 1,
-    device_model: "MYINTELLI PHONE",
-    photo: null,
-    hasGroups: false,
-    entity_group: null,
-  },
-  {
-    id_device: 74,
-    device_name: "IPHONE 7S",
-    id_device_model: 44,
-    settings_device: {
-      serial: "44MMV3DU4",
-      id_structure: 1,
-    },
-    status: 1,
-    device_model: "MYINTELLI PHONE",
-    photo: null,
-    hasGroups: false,
-    entity_group: null,
-  },
-];
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -159,7 +20,7 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     flexWrap: "wrap",
     alignItems: "center",
-    marginBottom: 20
+    marginBottom: 20,
   },
   title: {
     marginRight: 40,
@@ -181,15 +42,22 @@ const useStyles = makeStyles(() => ({
     flexGrow: 1,
     paddingLeft: 10,
   },
+  searchImage: {
+    height: 250,
+    width: 250
+  },
+  textImage: {
+    color: "#e9e9e9"
+  },
   resultContainer: {
     display: "flex",
-    flexWrap: 'wrap',
-    justifyContent: 'center'
+    flexWrap: "wrap",
+    justifyContent: "center",
   },
   root: {
     display: "flex",
     maxWidth: 300,
-    margin: 10
+    margin: 10,
   },
   details: {
     display: "flex",
@@ -203,13 +71,41 @@ const useStyles = makeStyles(() => ({
     width: 100,
   },
   textModelo: {
-      textTransform: "lowercase"
-  }
+    textTransform: "lowercase",
+  },
+  loadContainer: {
+    display: "flex",
+    justifyContent: "center"
+  },
+  btnLoad: {
+    alignSelf: "center",
+    marginTop: 10,
+    color: "#67dabb",
+    textTransform: "none",
+    "&:hover": {
+      background: "#252433",
+    },
+  },
 }));
 
 const Devices = () => {
     const classes = useStyles();
     const [searchData, setSearchData] = useState("");
+
+    const dispatch = useDispatch();
+    const results = useSelector(state => state.device.devices);
+
+    const handleClick = () => {
+      dispatch(getDevices(searchData));
+    }
+
+    const handleKey = () => {
+      if(searchData !== "") dispatch(getDevices(searchData));
+    };
+
+    const handleLoadMore = () => {
+      dispatch(loadMore(searchData, true));
+    }
 
     return (
       <div className={classes.container}>
@@ -220,48 +116,65 @@ const Devices = () => {
             <InputBase
               placeholder="Search Devices by name"
               className={classes.inputBase}
+              onKeyUp={handleKey}
               onChange={(e) => {
                 setSearchData(e.target.value);
               }}
             />
             <Divider orientation="vertical" className={classes.searchDivider} />
-            <IconButton
-              type="submit"
-              onClick={(e) => {
-                e.preventDefault();
-              }}
-            >
+            <IconButton type="submit" onClick={handleClick}>
               <SearchIcon />
             </IconButton>
           </Paper>
         </div>
         <div className={classes.resultContainer}>
-          {results.map((result) => (
-            <Card className={classes.root}>
-              <CardMedia
-                className={classes.cover}
-                image={result.photo ? result.photo : defaultDevice}
-                title={result.device_name}
-              />
-              <div className={classes.details}>
-                <CardContent className={classes.content}>
-                  <Typography variant="subtitle1">
-                    {result.device_name}
-                  </Typography>
-                  <Typography variant="parrafo2" color="textSecondary">
-                    Modelo:{" "}
-                    <span className={classes.textModelo}>
-                      {result.device_model}
-                    </span>
-                  </Typography>
-                  <Typography variant="parrafo2" color="textSecondary">
-                    Serial: {result.settings_device.serial}
-                  </Typography>
-                </CardContent>
-              </div>
-            </Card>
-          ))}
+          {results.length === 0 ? (
+            <div>
+              <img src={searchImage} className={classes.searchImage} />
+              <Typography 
+                className={classes.textImage}
+                variant="body2"
+              > 
+                Great, look for something interesting 
+              </Typography>
+            </div>
+          ) : (
+            <>
+              {results.map((result, index) => (
+                <Card className={classes.root} key={index}>
+                  <CardMedia
+                    className={classes.cover}
+                    image={result.photo ? result.photo : defaultDevice}
+                    title={result.device_name}
+                  />
+                  <div className={classes.details}>
+                    <CardContent className={classes.content}>
+                      <Typography variant="subtitle1">
+                        {result.device_name}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        Modelo:{" "}
+                        <span className={classes.textModelo}>
+                          {result.device_model}
+                        </span>
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        Serial: {result.settings_device.serial}
+                      </Typography>
+                    </CardContent>
+                  </div>
+                </Card>
+              ))}
+            </>
+          )}
         </div>
+        {results.length !== 0 ? (
+          <div className={classes.loadContainer}>
+            <Button className={classes.btnLoad} onClick={handleLoadMore}>
+              Load more...
+            </Button>
+          </div>
+        ) : null}
       </div>
     );
 }

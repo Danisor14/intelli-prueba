@@ -11,7 +11,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
 import { drawerWidth } from "./DrawerComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { logOut } from "../../actions/deviceAction";
+import { logOut } from "../../actions/loginAction";
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
