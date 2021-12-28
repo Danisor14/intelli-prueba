@@ -16,7 +16,3 @@ const clientAxios = (token) => {
 
 export default clientAxios
 
-
-/* const user = JSON.parse(localStorage.getItem('user'));
-console.log(`Bearer ${user ? user.userData.token : ""}`); */
-

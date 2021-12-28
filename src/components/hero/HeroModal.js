@@ -112,8 +112,8 @@ const HeroModal = ({ open, handleClose }) => {
             </div>
             <div className={classes.textContainer}>
               <Typography variant="subtitle1">Comics:</Typography>
-              {comics.map((comic) => (
-                <Typography className={classes.comicText}>{comic}</Typography>
+              {comics.map((comic, index) => (
+                <Typography key={index} className={classes.comicText}>{comic}</Typography>
               ))}
             </div>
             <a href={url} target="_blank" className={classes.viewMore}>

@@ -1,6 +1,9 @@
 import React from "react";
-import { Button, Drawer, makeStyles, Typography } from "@material-ui/core";
-
+import { Drawer, makeStyles, Typography, List, ListItem, ListItemIcon, ListItemText, Divider } from "@material-ui/core";
+import DevicesOtherIcon from "@material-ui/icons/DevicesOther";
+import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
+import Menu from "./Menu";
+import { Link } from "react-router-dom";
 
 export const drawerWidth = 240;
 
@@ -47,6 +50,31 @@ const useStyles = makeStyles((theme) => ({
       background: "#62b8a1",
     },
   },
+  list: {
+    "& .MuiButtonBase-root": {
+      color: "#e9e9e9",
+    },
+    "& .MuiTypography-body1": {
+      fontSize: "0.9rem",
+      fontWeight: 510,
+    },
+  },
+  listItem: {
+    " &.MuiListItem-button": {
+      "&:hover": {
+        background: "#26243e",
+      },
+    },
+  },
+  divider: {
+    background: "#2b284d",
+  },
+  icon: {
+    color: "#E9E9E9",
+  },
+  link: {
+    textDecoration: "none",
+  },
 }));
 
 const DrawerComponent = (props) => {
@@ -69,14 +97,26 @@ const DrawerComponent = (props) => {
         </Typography>
       </div>
 
-      <div className={classes.main}>
-        <ul>
-          <li>item 1</li>
-          <li>item 2</li>
-          <li>item 3</li>
-          <li>item 4</li>
-        </ul>
-      </div>
+      <List component="nav" className={classes.list}>
+        <Link to="devices" className={classes.link}>
+          <ListItem button className={classes.listItem}>
+            <ListItemIcon>
+              <DevicesOtherIcon className={classes.icon} />
+            </ListItemIcon>
+            <ListItemText primary={"Devices"} className={classes.text} />
+          </ListItem>
+        </Link>
+        <Link to="heroes" className={classes.link}>
+          <ListItem button className={classes.listItem}>
+            <ListItemIcon>
+              <EmojiEventsIcon className={classes.icon} />
+            </ListItemIcon>
+            <ListItemText primary={"Heroes"} className={classes.text} />
+          </ListItem>
+        </Link>
+      </List>
+      <Divider className={classes.divider} />
+      <Menu />
     </Drawer>
   );
 };
