@@ -39,17 +39,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     width: "100%",
   },
-  btnNew: {
-    width: "80%",
-    padding: 10,
-    marginTop: 10,
-    marginBottom: 50,
-    background: "#67dabb",
-    color: "#181721",
-    "&:hover": {
-      background: "#62b8a1",
-    },
-  },
   list: {
     "& .MuiButtonBase-root": {
       color: "#e9e9e9",
