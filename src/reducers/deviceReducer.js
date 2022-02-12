@@ -18,7 +18,6 @@ export default function deviceReducer(state = initialState, action) {
         logged: true,
         userData: action.payload,
       };
-      break;
     case LOGOUT:
       return {
           ...state,

@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    maxHeight: 550
   },
   imgContainer: {
     width: "100%",

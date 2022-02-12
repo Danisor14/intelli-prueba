@@ -5,6 +5,7 @@ const initialState = {
   heroInfo: "",
   comics: [], 
   thumbnail: [],
+  offset: 0,
   url: ""
 };
 
@@ -13,9 +14,9 @@ export default function heroReducer(state = initialState, action) {
     case GETHEROES:
       return {
         ...state,
-        heroes: action.payload
+        heroes: [...state.heroes, ...action.payload.results],
+        offset: action.payload.offset,
       };
-      break;
     
     case GETHEROINFO:
       return {

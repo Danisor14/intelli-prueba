@@ -116,7 +116,7 @@ const Devices = () => {
             <InputBase
               placeholder="Search Devices by name"
               className={classes.inputBase}
-              onKeyUp={handleKey}
+              onKeyUp={handleKey} 
               onChange={(e) => {
                 setSearchData(e.target.value);
               }}

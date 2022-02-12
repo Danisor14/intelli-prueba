@@ -37,17 +37,17 @@ const Menu = () => {
       sidebarCenter,
       sidebarDown,
     } = useMenu();
-    
-    /* const useGenerator = () => {
-        const [open, setOpen] = useState(false);
-        return [open, setOpen]
-    } */
+
 
     return (
       <>
         <List component="nav" className={classes.list}>
           {sidebarUp.map((up) => (
-            <ListItem button className={classes.listItem} key={up.id_module}>
+            <ListItem 
+              button 
+              className={classes.listItem} s
+              key={up.id_module}
+            >
               <ListItemText
                 primary={up.module.replaceAll("_", " ").toLowerCase()}
               />

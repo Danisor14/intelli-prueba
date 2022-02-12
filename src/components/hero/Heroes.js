@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Divider, makeStyles, Typography, Card, CardActionArea, CardMedia, CardContent } from "@material-ui/core";
+import { Divider, makeStyles, Typography, Card, CardActionArea, CardMedia, CardContent, CircularProgress } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { getHeroes, getHeroInfo } from "../../actions/heroAction";
 import marvel from "../../assets/marvel.png"
 import HeroModal from "./HeroModal";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -26,14 +27,17 @@ const useStyles = makeStyles(() => ({
   },
   divider: {
     background: "#27253d",
+    marginBottom: 10
   },
   resultContainer: {
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "center",
+    alignItems: "center"
   },
   card: {
-    margin: 10
+    margin: 10,
+    maxWidth: 200
   },
   img: {
       height: 200,
@@ -51,6 +55,7 @@ const Heroes = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const heroes = useSelector(state => state.hero.heroes);
+    const offset = useSelector(state => state.hero.offset);
 
     const [open, setOpen] = useState(false);
 
@@ -75,7 +80,22 @@ const Heroes = () => {
           </Typography>
         </div>
         <Divider className={classes.divider} />
-        <div className={classes.resultContainer}>
+        <InfiniteScroll
+          dataLength={heroes.length}
+          hasMore={ offset < 1559 } //1559 maximum amount of heroes
+          className={classes.resultContainer}
+          next={() => dispatch(getHeroes())}
+          loader={<CircularProgress color="secondary"/>}
+          endMessage={
+            <Typography 
+              align="center" 
+              variant="subtitle2"
+              color="secondary"
+            >
+              Yay! You have seen it all, now you are a Marvel expert
+            </Typography>
+          }
+        >
           {heroes.map((hero) => (
             <Card className={classes.card} key={hero.id}>
               <CardActionArea
@@ -90,18 +110,15 @@ const Heroes = () => {
                   src={`${hero.thumbnail.path}.${hero.thumbnail.extension}`}
                 />
                 <CardContent>
-                  <Typography
-                    variant="subtitle2"
-                    align="center" /* className={classes.heroName} */
-                  >
+                  <Typography variant="subtitle2" align="center">
                     {hero.name}
                   </Typography>
                 </CardContent>
               </CardActionArea>
             </Card>
           ))}
-          <HeroModal open={open} handleClose={handleClose} />
-        </div>
+        </InfiniteScroll>
+        <HeroModal open={open} handleClose={handleClose} />
       </div>
     );
 }
